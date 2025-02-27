@@ -17,15 +17,15 @@ os.chdir(root_dir)
 
 while True:
     try:
-        result = subprocess.run("bash scripts/2_app/startup_app.sh", shell=True)
+        # Option B: using a list without shell=True (preferred)
+        result = subprocess.run(["bash", "scripts/2_app/startup_app.sh"])
         
         if result.returncode == 0:
             print("Application exited successfully.")
         else:
             print(f"Application crashed with exit code {result.returncode}. Restarting...")
-
     except Exception as e:
         print(f"Error occurred: {e}. Restarting...")
 
     print("Application Restarting in 5 seconds...")
-    time.sleep(5)  # Delay before restarting to avoid immediate crash loops
+    time.sleep(5)
