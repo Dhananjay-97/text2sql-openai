@@ -22,10 +22,14 @@ export API_URL="http://localhost:8080"
 uvicorn backend:app --reload --host 127.0.0.1 --port 8081 > backend.log 2>&1 &
 
 # Start Streamlit frontend
-streamlit run frontend.py &
+streamlit run frontend.py > frontend.log 2>&1 &
 
 # wait for the python backend to be ready
-while ! curl --output /dev/null --silent --fail http://localhost:8081/amp-update; do
+# while ! curl --output /dev/null --silent --fail http://localhost:8081/amp-update; do
+#     echo "Waiting for the Python backend to be ready..."
+#     sleep 4
+# done
+while ! curl --output /dev/null --silent --fail http://localhost:8081/health; do
     echo "Waiting for the Python backend to be ready..."
     sleep 4
 done
