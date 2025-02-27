@@ -1,7 +1,7 @@
 name: Text2SQL
 description: "Build a CHAT application to ask questions about your database that will generate SQL query."
 author: "Dhananjay"
-date: "2025-29-02"
+date: "2025-09-02"
 specification_version: 1.0
 prototype_version: 1.0
 
