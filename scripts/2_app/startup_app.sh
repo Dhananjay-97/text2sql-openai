@@ -19,7 +19,7 @@ export RAG_DATABASES_DIR=$(pwd)/databases
 export API_URL="http://localhost:8080"
 
 # Start FastAPI backend
-uvicorn backend:app --reload --host 127.0.0.1 --port 8080 > backend.log 2>&1 &
+uvicorn backend:app --reload --host 0.0.0.0 --port 8080 > backend.log 2>&1 &
 
 # Start Streamlit frontend
 streamlit run frontend.py > frontend.log 2>&1 &
