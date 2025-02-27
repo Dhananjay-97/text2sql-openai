@@ -20,7 +20,7 @@ entries:
       - LLM
       - RAG
       - AI
-    # git_url: "https://github.com/Dhananjay-97/text2sql-cml-app"
+    # git_url: "https://github.com/Dhananjay-97/text2sql-openai"
     git_ref: "main"
     is_prototype: true
     is_new: true
