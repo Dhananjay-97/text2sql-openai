@@ -1,0 +1,4 @@
+---
+streamlit:
+  logo: "./images/Maveric Logo.png"
+  about: "This is Demo Bot. I will help you to write a SQL query."
