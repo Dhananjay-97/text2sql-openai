@@ -43,7 +43,7 @@ db_name = st.sidebar.selectbox(
 if st.sidebar.button("Connect"):
     payload = {"db_name": db_name}
     try:
-        response = requests.post("http://127.0.0.1:8000/select_database", json=payload)
+        response = requests.post("http://127.0.0.1:8080/select_database", json=payload)
         if response.status_code == 200:
             st.session_state['unique_id'] = response.json()['unique_id']
             st.success(f"Connected to {db_name} Database successfully! Unique ID: {st.session_state['unique_id']}")
@@ -91,7 +91,7 @@ def openai_llm_response(user_input):
             "query": user_input
         }
         try:
-            response = requests.post("http://127.0.0.1:8000/process_and_generate_sql", json=payload)
+            response = requests.post("http://127.0.0.1:8080/process_and_generate_sql", json=payload)
             if response.status_code == 200:
                 response_data = response.json()
                 api_call_cost = utils_fun.calc_cost(response_data["token_usage"])
@@ -154,7 +154,7 @@ def execute_sql_tab():
         st.error("No unique ID available. Please connect to a database first.")
 
 def perform_query_execution(query_input):
-    url = "http://127.0.0.1:8000/execute_query"
+    url = "http://127.0.0.1:8080/execute_query"
     query_payload = {"query": query_input, "db_config": {"db_name": db_name}}
     try:
         query_response = requests.post(url, json=query_payload).json()
