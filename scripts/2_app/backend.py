@@ -19,20 +19,15 @@ from rewrite_question import rewrite_question
 from schemas import CombinedRequest, DatabaseConfig, QueryRequest, SessionData
 from utils_fun import calc_costing, read_sqlite_file
 
+# Set up logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 session_dir = "sessions"
 os.makedirs(session_dir, exist_ok=True)
 
-# Setup the OpenAI API client with the specified model
-MODEL = config("OPENAI_CHAT_MODEL")
+# Setup the OpenAI API client 
+MODEL = config("OPENAI_CHAT_MODEL", default="gpt-4o-mini") # Added default value
 client = OpenAI(api_key=config("OPENAI_API_KEY"))
-
-####
-
-# OPENAI_API_KEY = read_sqlite_file("data.sqlite")
-# client = OpenAI(api_key=str(OPENAI_API_KEY))
-
-####
-
 
 current_directory = Path(__file__).parent
 
@@ -69,10 +64,8 @@ def create_database_connection(db_config: DatabaseConfig):
     try:
         return oracledb.connect(user=user, password=password, dsn=dsn)
     except oracledb.DatabaseError as e:
-        raise HTTPException(
-            status_code=500, detail=f"Failed to connect to the database: {str(e)}"
-        )
-
+        logging.error(f"Database connection error: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to connect to the database: {str(e)}")
 
 # Dependency function to get a DatabaseIndexing instance
 def db_dependency(db_config: DatabaseConfig = Depends()):
