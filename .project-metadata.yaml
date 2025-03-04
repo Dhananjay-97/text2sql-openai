@@ -1,10 +1,8 @@
 name: Text2SQL
 description: "Build a CHAT application to ask questions about your database that will generate SQL query."
 author: "Dhananjay"
-date: "2025-09-02"
 specification_version: 1.0
 prototype_version: 1.0
-
 
 environment_variables:
     OPENAI_API_KEY:
@@ -16,8 +14,7 @@ environment_variables:
         default: "gpt-4o-mini"
         description: "OpenAI Chat Model to use for text-to-SQL conversion."
         required: true
-
-
+        
     HR_USER:
         default: "HR"
         description: "HR database username."
@@ -83,34 +80,3 @@ runtimes:
   - editor: JupyterLab
     kernel: Python 3.10
     edition: Standard
-
-tasks:
-  - type: create_job
-    name: Download/Install Project Dependencies
-    entity_label: install_dependencies
-    arguments: none
-    script: scripts/1_session-install-deps/install_dependencies.py
-    short_summary: Create Job to Install Project Dependencies
-    kernel: python3
-    cpu: 2
-    memory: 4
-    environment:
-      TASK_TYPE: CREATE/RUN_JOB
-
-  - type: run_job
-    entity_label: install_dependencies
-    short_summary: Run Job to Install Project Dependencies
-    long_summary: Run Job to Install Project Dependencies
-
-  - type: start_application
-    name: Text2SQL
-    subdomain: text2sql
-    bypass_authentication: false
-    static_subdomain: false
-    script: scripts/2_app/startup_app.py
-    short_summary: Create and start Text2SQL.
-    long_summary: Create and start Text2SQL.
-    cpu: 2
-    memory: 4
-    environment_variables:
-      TASK_TYPE: START_APPLICATION
