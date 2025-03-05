@@ -6,64 +6,56 @@ prototype_version: 1.0
 
 environment_variables:
     OPENAI_API_KEY:
-        default: "sk-proj-_4tQsUcsB0lmE4g5RMrVo7EH-DIBjMGwH3vQUiK1hi1CforHL0_kGRu6eQVXwCuGDyRuGnwayVT3BlbkFJMmJkhQ4A"
-        description: "OpenAI api key to use for text-to-SQL conversion."
+        description: "OpenAI api key to use for text-to-SQL conversion. Provided by CDP."
         required: true
 
     OPENAI_CHAT_MODEL:
-        default: "gpt-4o-mini"
-        description: "OpenAI Chat Model to use for text-to-SQL conversion."
+        description: "OpenAI Chat Model to use for text-to-SQL conversion. Provided by CDP."
         required: true
         
     HR_USER:
-        default: "HR"
-        description: "HR database username."
+        description: "HR database username. Provided by CDP."
         required: true
     HR_PASSWORD:
-        default: "HR"
-        description: "HR database password."
+        description: "HR database password. Provided by CDP."
         required: true
     HR_DSN:
-        default: "192.168.59.11/XEPDB1"
-        description: "HR database DSN."
+        description: "HR database DSN. Provided by CDP."
         required: true
-
+        
     BANK_USER:
-        default: "BANKING_DB1"
         description: "Banking database username."
         required: true
+        
     BANK_PASSWORD:
-        default: "sql123"
         description: "Banking database password."
         required: true
+        
     BANK_DSN:
-        default: "192.168.59.11/XEPDB1"
         description: "Banking database DSN."
         required: true
 
     MUSIC_USER:
-        default: "MUSIC_DB1"
         description: "Music database username."
         required: true
+        
     MUSIC_PASSWORD:
-        default: "music_db1"
         description: "Music database password."
         required: true
+    
     MUSIC_DSN:
-        default: "192.168.59.11/XEPDB1"
         description: "Music database DSN."
         required: true
 
     WATERFALL_USER:
-        default: "TEXT2SQLWATERFALL"
         description: "Waterfall database username."
         required: true
+        
     WATERFALL_PASSWORD:
-        default: "sql123"
         description: "Waterfall database password."
         required: true
+        
     WATERFALL_DSN:
-        default: "192.168.59.11/XEPDB1"
         description: "Waterfall database DSN."
         required: true
 
@@ -71,6 +63,7 @@ environment_variables:
         default: "1024"
         description: "Chunk size for document processing."
         required: false
+        
     CHUNK_OVERLAP:
         default: "64"
         description: "Chunk overlap for document processing."
