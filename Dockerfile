@@ -31,3 +31,9 @@ EXPOSE 8080
 EXPOSE 8501
 
 ENTRYPOINT ["/bin/bash", "entrypoint.sh"]
+
+# Example Healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD curl -f http://localhost:8080/ || exit 1
+
+RUN addgroup app && adduser --system --ingroup app app
+USER app
