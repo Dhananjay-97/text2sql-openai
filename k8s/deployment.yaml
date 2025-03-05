@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: text2sql-deployment
+spec:
+  replicas: 1 # Adjust for scaling
+  selector:
+    matchLabels:
+      app: text2sql
+  template:
+    metadata:
+      labels:
+        app: text2sql
+    spec:
+      containers:
+        - name: backend
+          image: your_registry/text2sql-image:latest # Replace with your image
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: "1"
+              memory: "2Gi"
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+          env:
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: text2sql-secrets # Referencing a Kubernetes Secret
+                  key: openai-api-key
+            - name: HR_USER
+              valueFrom:
+                secretKeyRef:
+                  name: text2sql-secrets
+                  key: hr-user
+            - name: HR_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: text2sql-secrets
+                  key: hr-password
+            - name: HR_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: text2sql-secrets
+                  key: hr-dsn
+            # Add other environment variables similarly
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+        - name: frontend
+          image: your_registry/text2sql-image:latest # Replace with your image
+          ports:
+            - containerPort: 8501
+          resources:
+            requests:
+              cpu: "0.5"
+              memory: "1Gi"
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+          env:
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: text2sql-secrets # Referencing a Kubernetes Secret
+                  key: openai-api-key
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8501 #May need to define a health check endpoint in streamlit
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8501 #May need to define a health check endpoint in streamlit
+            initialDelaySeconds: 30
+            periodSeconds: 10
