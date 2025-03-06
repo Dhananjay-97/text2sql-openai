@@ -17,23 +17,40 @@ ENV WATERFALL_USER=${WATERFALL_USER}
 ENV WATERFALL_PASSWORD=${WATERFALL_PASSWORD}
 ENV WATERFALL_DSN=${WATERFALL_DSN}
 
+FROM python:3.9
 WORKDIR /app
-
-COPY requirements.txt .
+COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
+RUN chmod +x entrypoint.sh
+EXPOSE 8080 8501
+ENTRYPOINT ["./entrypoint.sh"]
+ 
+Run the below command to build the docker image: (Make sure you are into the path where the Dockerfile is available)
+docker build -t text2sql . 
+ 
+Check if you go the image build by using command: 
+docker images
+ 
+If you want to run the container of this image and check then use the below command: 
+docker run -p 8080:8080 -p 8051:8051 --name text2sql-container text2sql
 
-COPY scripts/2_app .
-COPY entrypoint.sh .
-COPY config.yml .
-COPY scripts/2_app/images .
+# WORKDIR /app
 
-EXPOSE 8080
-EXPOSE 8501
+# COPY requirements.txt .
+# RUN pip install --no-cache-dir -r requirements.txt
 
-ENTRYPOINT ["/bin/bash", "entrypoint.sh"]
+# COPY scripts/2_app .
+# COPY entrypoint.sh .
+# COPY config.yml .
+# COPY scripts/2_app/images .
 
-# Example Healthcheck
-HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD curl -f http://localhost:8080/ || exit 1
+# EXPOSE 8080
+# EXPOSE 8501
 
-RUN addgroup app && adduser --system --ingroup app app
-USER app
+# ENTRYPOINT ["/bin/bash", "entrypoint.sh"]
+
+# # Example Healthcheck
+# HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD curl -f http://localhost:8080/ || exit 1
+
+# RUN addgroup app && adduser --system --ingroup app app
+# USER app
